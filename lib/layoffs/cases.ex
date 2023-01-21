@@ -233,4 +233,25 @@ defmodule Layoffs.Cases do
   def change_layoff(%Layoff{} = layoff, attrs \\ %{}) do
     Layoff.changeset(layoff, attrs)
   end
+
+  def get_last_layoff_with_callout do
+    last_layoff = get_last_layoff!()
+    callout = format_callout(last_layoff)
+    {last_layoff, callout}
+  end
+
+  defp format_callout(last_layoff) do
+    days = NaiveDateTime.diff(NaiveDateTime.utc_now(), last_layoff.inserted_at, :day)
+
+    middle =
+      case days do
+        d when d == 1 ->
+          "1 day"
+
+        d ->
+          "#{d} days"
+      end
+
+    "We are #{middle} without layoffs"
+  end
 end

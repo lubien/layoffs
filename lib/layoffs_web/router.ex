@@ -17,7 +17,6 @@ defmodule LayoffsWeb.Router do
   scope "/", LayoffsWeb do
     pipe_through :browser
 
-    # get "/", PageController, :home
     # live "/companies", CompanyLive.Index, :index
     # live "/companies/new", CompanyLive.Index, :new
     # live "/companies/:id/edit", CompanyLive.Index, :edit
@@ -26,6 +25,7 @@ defmodule LayoffsWeb.Router do
     # live "/companies/:id/show/edit", CompanyLive.Show, :edit
 
     live "/", LayoffLive.Index, :index
+    get "/image", PageController, :image
     # live "/layoffs/new", LayoffLive.Index, :new
     # live "/layoffs/:id/edit", LayoffLive.Index, :edit
 

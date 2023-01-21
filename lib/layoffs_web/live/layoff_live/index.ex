@@ -5,23 +5,7 @@ defmodule LayoffsWeb.LayoffLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    last_layoff = Cases.get_last_layoff!()
-    callout = format_callout(last_layoff)
+    {last_layoff, callout} = Cases.get_last_layoff_with_callout()
     {:ok, assign(socket, page_title: callout, callout: callout, last_layoff: last_layoff)}
-  end
-
-  def format_callout(last_layoff) do
-    days = NaiveDateTime.diff(NaiveDateTime.utc_now(), last_layoff.inserted_at, :day)
-
-    middle =
-      case days do
-        d when d == 1 ->
-          "1 day"
-
-        d ->
-          "#{d} days"
-      end
-
-    "We are #{middle} without layoffs"
   end
 end

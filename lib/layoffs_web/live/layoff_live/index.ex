@@ -7,7 +7,7 @@ defmodule LayoffsWeb.LayoffLive.Index do
   def mount(_params, _session, socket) do
     last_layoff = Cases.get_last_layoff!()
     callout = format_callout(last_layoff)
-    {:ok, assign(socket, callout: callout, last_layoff: last_layoff)}
+    {:ok, assign(socket, page_title: callout, callout: callout, last_layoff: last_layoff)}
   end
 
   def format_callout(last_layoff) do

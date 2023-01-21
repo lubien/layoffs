@@ -1,0 +1,27 @@
+<.header>
+  Company <%= @company.id %>
+  <:subtitle>This is a company record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/companies/#{@company}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit company</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @company.name %></:item>
+  <:item title="Uid"><%= @company.uid %></:item>
+</.list>
+
+<.back navigate={~p"/companies"}>Back to companies</.back>
+
+<.modal :if={@live_action == :edit} id="company-modal" show on_cancel={JS.patch(~p"/companies/#{@company}")}>
+  <.live_component
+    module={LayoffsWeb.CompanyLive.FormComponent}
+    id={@company.id}
+    title={@page_title}
+    action={@live_action}
+    company={@company}
+    navigate={~p"/companies/#{@company}"}
+  />
+</.modal>

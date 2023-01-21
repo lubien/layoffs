@@ -1,0 +1,40 @@
+<.header>
+  Listing Companies
+  <:actions>
+    <.link patch={~p"/companies/new"}>
+      <.button>New Company</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="companies" rows={@companies} row_click={&JS.navigate(~p"/companies/#{&1}")}>
+  <:col :let={company} label="Name"><%= company.name %></:col>
+  <:col :let={company} label="Uid"><%= company.uid %></:col>
+  <:action :let={company}>
+    <div class="sr-only">
+      <.link navigate={~p"/companies/#{company}"}>Show</.link>
+    </div>
+    <.link patch={~p"/companies/#{company}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={company}>
+    <.link phx-click={JS.push("delete", value: %{id: company.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="company-modal"
+  show
+  on_cancel={JS.navigate(~p"/companies")}
+>
+  <.live_component
+    module={LayoffsWeb.CompanyLive.FormComponent}
+    id={@company.id || :new}
+    title={@page_title}
+    action={@live_action}
+    company={@company}
+    navigate={~p"/companies"}
+  />
+</.modal>

@@ -1,1 +1,5 @@
-{"company":"Simon Data","inserted_at":"2020-04-23T00:00:00","source_url":"Internal memo"}
+{
+  "company": "Simon Data",
+  "inserted_at": "2020-04-23T00:00:00",
+  "source_url": null
+}

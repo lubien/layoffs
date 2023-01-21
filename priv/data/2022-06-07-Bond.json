@@ -1,1 +1,5 @@
-{"company":"Bond","inserted_at":"2022-06-07T00:00:00","source_url":"Internal memo"}
+{
+  "company": "Bond",
+  "inserted_at": "2022-06-07T00:00:00",
+  "source_url": null
+}

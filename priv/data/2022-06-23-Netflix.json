@@ -1,1 +1,5 @@
-{"company":"Netflix","inserted_at":"2022-06-23T00:00:00","source_url":"https://www.cnbc.com/2022/06/23/netflix-lays-off-300-more-employees-as-revenue-growth-continues-to-slow.html"}
+{
+  "company": "Netflix",
+  "inserted_at": "2022-06-23T00:00:00",
+  "source_url": "https://www.cnbc.com/2022/06/23/netflix-lays-off-300-more-employees-as-revenue-growth-continues-to-slow.html"
+}

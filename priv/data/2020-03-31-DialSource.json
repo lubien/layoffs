@@ -1,1 +1,5 @@
-{"company":"DialSource","inserted_at":"2020-03-31T00:00:00","source_url":"Company executive"}
+{
+  "company": "DialSource",
+  "inserted_at": "2020-03-31T00:00:00",
+  "source_url": null
+}

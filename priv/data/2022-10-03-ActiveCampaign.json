@@ -1,1 +1,5 @@
-{"company":"ActiveCampaign","inserted_at":"2022-10-03T00:00:00","source_url":"LinkedIn"}
+{
+  "company": "ActiveCampaign",
+  "inserted_at": "2022-10-03T00:00:00",
+  "source_url": null
+}

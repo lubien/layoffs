@@ -11,6 +11,10 @@ defmodule Layoffs.Release do
     for repo <- repos() do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
     end
+
+    Ecto.Migrator.with_repo(Layoffs.Repo, fn _ ->
+      Layoffs.LayoffsImporter.import_from_priv()
+    end)
   end
 
   def rollback(repo, version) do

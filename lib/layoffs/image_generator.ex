@@ -26,7 +26,7 @@ defmodule Layoffs.ImageGenerator do
         "-gravity",
         "center",
         "-extent",
-        "800x400",
+        "1200x630",
         # [3]
         "png:-"
       ])

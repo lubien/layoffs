@@ -50,15 +50,18 @@
               <%= @callout %>
             </h1>
             <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
-              Last layoff by
+              Last <%= if Enum.count_until(@last_layoffs, 2) > 1, do: "layoffs", else: "layoff" %> by
               <.link
-                href={@last_layoff.source_url}
+                :for={layoff <- @last_layoffs}
+                href={layoff.source_url}
                 target="_blank"
                 rel="nofollow"
-                class="font-semibold text-indigo-600"
+                class="font-semibold text-indigo-600 comma-inbetween"
               >
-                <%= @last_layoff.company.name %> <span aria-hidden="true">&rarr;</span>
+                <%= layoff.company.name %>
+                <Heroicons.arrow_top_right_on_square class="h-5 inline" />
               </.link>
+              on <%= Timex.format!(hd(@last_layoffs).inserted_at, "{Mfull} {D} {YYYY}") %>
             </p>
           </div>
           <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">

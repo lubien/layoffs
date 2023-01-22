@@ -161,12 +161,18 @@ defmodule Layoffs.Cases do
   """
   def get_layoff!(id), do: Repo.get!(Layoff, id)
 
-  def get_last_layoff! do
+  def get_tied_last_layoffs do
+    subquery_last_date =
+      from l in Layoff,
+        select: l.inserted_at,
+        order_by: [desc: l.inserted_at, desc: l.id],
+        limit: 1
+
     Layoff
-    |> order_by([l], desc: l.inserted_at, desc: l.id)
-    |> limit(1)
-    |> preload(:company)
-    |> Repo.one!()
+    |> where([l], l.inserted_at == subquery(subquery_last_date))
+    |> order_by([l], desc: l.id)
+    |> preload([:company])
+    |> Repo.all()
   end
 
   @doc """
@@ -235,12 +241,12 @@ defmodule Layoffs.Cases do
   end
 
   def get_last_layoff_with_callout do
-    last_layoff = get_last_layoff!()
-    callout = format_callout(last_layoff)
-    {last_layoff, callout}
+    last_layoffs = get_tied_last_layoffs()
+    callout = format_callout(last_layoffs)
+    {last_layoffs, callout}
   end
 
-  defp format_callout(last_layoff) do
+  defp format_callout([last_layoff | _rest] = _last_layoffs) do
     days = NaiveDateTime.diff(NaiveDateTime.utc_now(), last_layoff.inserted_at, :day)
 
     middle =

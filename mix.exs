@@ -50,6 +50,7 @@ defmodule Layoffs.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
+      {:timex, "~> 3.7"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end

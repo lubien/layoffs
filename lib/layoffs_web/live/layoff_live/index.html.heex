@@ -130,7 +130,7 @@
         :for={{date, count} <- @streaks}
         data-real-count={count}
         data-date={date}
-        data-level={trunc(count / 5)}
+        data-level={trunc(ceil(3 * (count / @highest_count)))}
       >
       </li>
     </ul>

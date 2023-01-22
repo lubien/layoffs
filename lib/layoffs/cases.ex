@@ -175,6 +175,33 @@ defmodule Layoffs.Cases do
     |> Repo.all()
   end
 
+  def get_streaks do
+    query = """
+    SELECT
+      d.date,
+      count(l.id)
+    FROM
+      (
+        SELECT
+          to_char(
+            date_trunc('day', (current_date - offs)),
+            'YYYY-MM-DD'
+          ) AS date
+        FROM
+          generate_series(0, 365, 1) AS offs
+      ) d
+      LEFT OUTER JOIN layoffs l ON d.date = to_char(date_trunc('day', l.inserted_at), 'YYYY-MM-DD')
+    GROUP BY
+      d.date;
+    """
+
+    with %{rows: rows} <- Ecto.Adapters.SQL.query!(Repo, query, []) do
+      for [date_str, count] <- rows do
+        {Date.from_iso8601!(date_str), count}
+      end
+    end
+  end
+
   @doc """
   Creates a layoff.
 

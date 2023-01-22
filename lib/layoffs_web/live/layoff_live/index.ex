@@ -6,6 +6,14 @@ defmodule LayoffsWeb.LayoffLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {last_layoffs, callout} = Cases.get_last_layoff_with_callout()
-    {:ok, assign(socket, page_title: callout, callout: callout, last_layoffs: last_layoffs)}
+    streaks = Cases.get_streaks()
+
+    {:ok,
+     assign(socket,
+       page_title: callout,
+       callout: callout,
+       last_layoffs: last_layoffs,
+       streaks: streaks
+     )}
   end
 end

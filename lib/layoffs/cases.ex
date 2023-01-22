@@ -163,7 +163,7 @@ defmodule Layoffs.Cases do
 
   def get_last_layoff! do
     Layoff
-    |> order_by([l], desc: l.inserted_at)
+    |> order_by([l], desc: l.inserted_at, desc: l.id)
     |> limit(1)
     |> preload(:company)
     |> Repo.one!()

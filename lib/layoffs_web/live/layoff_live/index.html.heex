@@ -99,7 +99,7 @@
   </div>
 </div>
 <div class="hidden sm:block w-full text-center">
-  <div class="graph mx-auto">
+  <div class="graph mx-auto relative">
     <%= # TODO %>
     <ul :if={false} class="months">
       <li>Feb</li>
@@ -131,7 +131,67 @@
         data-real-count={count}
         data-date={date}
         data-level={trunc(ceil(3 * (count / @highest_count)))}
+        class={if count > 0, do: "cursor-pointer"}
+        phx-click={if count > 0, do: "show_layoffs_for_date"}
+        phx-value-date={date}
       >
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div :if={@selected_date}>
+  <div class="bg-white">
+    <div class="">
+      <div class="text-center">
+        <p class="mx-auto mt-5 max-w-xl text-xl text-gray-500">
+          Showing <%= @selected_date.count %> <%= if @selected_date.count > 1,
+            do: "layoffs",
+            else: "layoff" %> for <%= Timex.format!(@selected_date.date, "{Mfull} {D} {YYYY}") %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-hidden mx-auto mt-8 bg-white shadow sm:rounded-md max-w-2xl">
+    <ul role="list" class="divide-y divide-gray-200">
+      <li :for={layoff <- @selected_date.layoffs}>
+        <.link
+          href={if layoff.source_url, do: layoff.source_url, else: "#"}
+          class="block hover:bg-gray-50"
+          target="_blank"
+          rel="nofollow"
+        >
+          <div class="flex items-center px-4 py-4 sm:px-6">
+            <div class="flex min-w-0 flex-1 items-center">
+              <div class="min-w-0 flex-1 px-4">
+                <div>
+                  <p class="truncate text-sm font-medium text-indigo-600">
+                    <%= layoff.company.name %>
+                  </p>
+                  <p class="mt-2 flex items-center text-sm text-gray-500">
+                    <span :if={layoff.source_url} class="truncate"><%= layoff.source_url %></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- Heroicon name: mini/chevron-right -->
+              <svg
+                class="h-5 w-5 text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+        </.link>
       </li>
     </ul>
   </div>

@@ -145,6 +145,14 @@ defmodule Layoffs.Cases do
     Repo.all(Layoff)
   end
 
+  def list_layoffs_for_date(date) do
+    Layoff
+    |> where([l], fragment("date_trunc('day', ?)", l.inserted_at) == ^date)
+    |> order_by([l], desc: l.id)
+    |> preload([:company])
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single layoff.
 

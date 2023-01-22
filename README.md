@@ -1,5 +1,7 @@
 # Layoffs
 
+![](https://user-images.githubusercontent.com/9121359/213933327-bcbb5405-f3d7-4042-809a-bdc96cd9553d.png)
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
